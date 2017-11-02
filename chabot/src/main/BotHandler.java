@@ -1,50 +1,59 @@
 package main;
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 public class BotHandler extends JFrame {
 	private JTextField txtEnter = new JTextField();
 	private JTextArea txtChat = new JTextArea();
 
 	public BotHandler() {
-		ArrayList<String> exceptionMessageList = new ArrayList<String>(
+		final ArrayList<String> exceptionMessageList = new ArrayList<String>(
 				Arrays.asList("maalesef anlasilmadi...", "lutfen tekrarlar misin", "???"));
 
-		ArrayList<String> greetingMessageList = new ArrayList<String>(
+		final ArrayList<String> greetingMessageList = new ArrayList<String>(
 				Arrays.asList("ooo selammm..", "merhabalar", "mrb"));
 
 		// urun olusturma
 		CellPhone cellPhone = new CellPhone(1, "Asus", "Zenphone 3", 16, "3GB");
-		ArrayList<CellPhone> cellPhoneList = new ArrayList<CellPhone>();
+		final ArrayList<CellPhone> cellPhoneList = new ArrayList<CellPhone>();
 		cellPhoneList.add(cellPhone);
 		cellPhoneList.add(new CellPhone(2, "Apple", "Iphone 7", 64, "2GB"));
 		System.out.println("CellPhone:" + cellPhoneList.get(0));
 
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JScrollPane scrollPane = new JScrollPane(txtChat);
+		scrollPane.setBounds(20, 5, 400, 400);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
 		this.setSize(600, 600);
+		// elemanlari JFrame'e ekle
+		this.add(txtEnter);
 		this.setVisible(true);
-		this.setResizable(false);
-		this.setLayout(null);
+		// this.setResizable(false);{
+		this.setLayout(new FlowLayout());
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Java Bot Example");
+		this.add(scrollPane);
 
 		txtEnter.setLocation(5, 540);
 		txtEnter.setSize(590, 30);
-		txtEnter.requestFocusInWindow();
+		// txtEnter.requestFocusInWindow();
 
 		txtChat.setLocation(20, 5);
-		txtChat.setSize(560, 510);
+		txtChat.setSize(400, 400);
 		txtChat.setEditable(false);
 
 		// etkilesim
 		txtEnter.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				String uText = txtEnter.getText();
 				txtChat.append("You: " + uText + "\n");
@@ -77,8 +86,8 @@ public class BotHandler extends JFrame {
 		});
 
 		// elemanlari JFrame'e ekle
-		this.add(txtEnter);
-		this.add(txtChat);
+		// this.add(txtEnter);
+		// this.add(txtChat);
 	}
 
 	private void decideRandom(ArrayList<String> messageList) {
